@@ -11,9 +11,6 @@ public class FoodLog {
     public void addEntry(FoodEntry food){
         entries.add(food);
     }
-    public void removeEntry(String name){
-        //Implementation incoming
-    }
 
     public void setDate(Date date){
         this.date = date;
