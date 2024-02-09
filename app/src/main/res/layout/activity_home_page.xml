@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/fitflow_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"/>
+
+        <Button
+            android:id="@+id/btnFoodRecommendation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Food Recommendation"
+            android:layout_marginTop="70dp"/>
+
+        <Button
+            android:id="@+id/btnAddPersonalData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Personal Data"
+            android:layout_below="@id/btnFoodRecommendation"
+            android:layout_marginTop="50dp"/>
+
+        <Button
+            android:id="@+id/btnAddFood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Food"
+            android:layout_below="@id/btnAddPersonalData"
+            android:layout_marginTop="50dp"/>
+
+        <Button
+            android:id="@+id/btnAddWaterIntake"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Water Intake"
+            android:layout_below="@id/btnAddFood"
+            android:layout_marginTop="50dp"/>
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:layout_below="@id/btnAddWaterIntake"
+            android:layout_marginTop="50dp"/>
+    </RelativeLayout>
+</ScrollView>
