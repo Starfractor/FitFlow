@@ -55,5 +55,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    // Validate login credentials
+    private boolean isValidCredentials(String email, String password) {
+        return email.equals("peter@uci.edu") && password.equals("password");
+    }
 }
 
