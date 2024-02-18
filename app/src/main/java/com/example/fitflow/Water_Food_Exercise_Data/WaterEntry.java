@@ -1,5 +1,11 @@
-import java.util.Date;
+package com.example.fitflow.Water_Food_Exercise_Data;
 
+import java.util.Date;
+/*
+
+Class stores individual water entries with accompanying methods. Each entry is stored in
+an ArrayList is the WaterLog class.
+ */
 public class WaterEntry {
     private int ml;
     private Date date;

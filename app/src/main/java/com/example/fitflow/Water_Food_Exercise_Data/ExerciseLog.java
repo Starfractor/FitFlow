@@ -1,6 +1,10 @@
+package com.example.fitflow.Water_Food_Exercise_Data;
+
 import java.util.ArrayList;
 import java.util.Date;
-
+/*
+Stores exercise entries with accompanying methods. New exercise log should be made daily.
+ */
 public class ExerciseLog {
     private ArrayList<ExerciseEntry> entries;
     private Date date;
