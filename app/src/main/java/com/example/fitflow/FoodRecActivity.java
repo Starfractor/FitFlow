@@ -10,6 +10,7 @@ public class FoodRecActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.food_recommendation);
     }
     private void getLocation(){
 
