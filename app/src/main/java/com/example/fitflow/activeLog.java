@@ -56,14 +56,14 @@ public class activeLog {
                     //Load in new file
                     try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(file))) {
                         foodLog = (FoodLog) stream.readObject();
-                        System.out.println("Made it here");
+                        System.out.println(foodLog.totalCals);
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }
-        if(!found || found){
+        if(!found){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 foodLog = new FoodLog(LocalDate.now());
             }
