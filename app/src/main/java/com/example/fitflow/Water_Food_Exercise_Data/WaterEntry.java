@@ -1,12 +1,13 @@
 package com.example.fitflow.Water_Food_Exercise_Data;
 
+import java.io.Serializable;
 import java.util.Date;
 /*
 
 Class stores individual water entries with accompanying methods. Each entry is stored in
 an ArrayList is the WaterLog class.
  */
-public class WaterEntry {
+public class WaterEntry implements Serializable {
     private int ml;
     private Date date;
     private String name;

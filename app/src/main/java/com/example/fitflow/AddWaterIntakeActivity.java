@@ -12,6 +12,7 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
 
     private EditText editWater;
     private EditText editTime;
+
     private Button buttonAdd;
     private Button buttonCancel;
 
@@ -22,6 +23,7 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
 
         editWater = findViewById(R.id.editWater);
         editTime = findViewById(R.id.editTime);
+
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonCancel = findViewById(R.id.buttonCancel);
 

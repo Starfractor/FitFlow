@@ -1,20 +1,23 @@
 package com.example.fitflow.Water_Food_Exercise_Data;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 /*
 Class stores individual Food entries with accompanying methods. Each entry is stored in
 an ArrayList is the FoodLog class.
  */
-public class FoodEntry {
+public class FoodEntry implements Serializable {
     private String name;
     private int calories;
     private int count;
-    private Date date;
-    public FoodEntry(String name, int calories, int count, Date date){
+    private LocalTime time;
+    public FoodEntry(String name, int calories, int count, LocalTime time){
         this.name = name;
         this.calories = calories;
         this.count = count;
-        this.date = date;
+        this.time = time;
     }
 
     public void updateTotalCalories(int calories){
@@ -32,11 +35,11 @@ public class FoodEntry {
         this.count = count;
     }
 
-    public void changeDate(Date date){
-        this.date = date;
+    public void changeDate(LocalTime time){
+        this.time = time;
     }
-    public Date getDate(){
-        return this.date;
+    public LocalTime getDate(){
+        return this.time;
     }
 
 }

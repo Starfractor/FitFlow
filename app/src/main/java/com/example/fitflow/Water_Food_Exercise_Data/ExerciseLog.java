@@ -1,15 +1,17 @@
 package com.example.fitflow.Water_Food_Exercise_Data;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 /*
 Stores exercise entries with accompanying methods. New exercise log should be made daily.
  */
-public class ExerciseLog {
+public class ExerciseLog implements Serializable {
     private ArrayList<ExerciseEntry> entries;
-    private Date date;
+    private LocalDate date;
 
-    public ExerciseLog(Date date){
+    public ExerciseLog(LocalDate date){
         entries = new ArrayList<ExerciseEntry>();
         this.date = date;
     }
@@ -27,10 +29,10 @@ public class ExerciseLog {
         return false;
     }
 
-    public void setDate(Date date){
+    public void setDate(LocalDate date){
         this.date = date;
     }
-    public Date getDate(){
+    public LocalDate getDate(){
         return this.date;
     }
 

@@ -13,6 +13,13 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        if(!activeLog.init) {
+            activeLog.init_active();
+//            activeLog.water_load_data(this);
+            activeLog.food_load_data(this);
+//            activeLog.exercise_load_data(this);
+//            activeLog.user_load_data(this);
+        }
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
