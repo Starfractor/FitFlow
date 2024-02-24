@@ -50,7 +50,7 @@
             android:id="@+id/editCalories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="" />
 
         <View
             android:layout_width="wrap_content"
@@ -86,6 +86,13 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="Cancel" />
+
+        <TextView
+            android:id="@+id/calorieDisplay"
+            android:layout_width="345dp"
+            android:layout_height="48dp"
+            android:alpha="0.8"
+            android:text="Calories eaten today: " />
 
     </LinearLayout>
 </LinearLayout>

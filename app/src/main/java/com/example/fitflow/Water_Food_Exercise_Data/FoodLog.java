@@ -18,7 +18,7 @@ Stores food entries with accompanying methods. New food log should be made daily
 public class FoodLog implements Serializable {
     private ArrayList<FoodEntry> entries;
     private LocalDate date;
-    private int totalCals;
+    public int totalCals;
 
     public FoodLog(LocalDate date){
         entries = new ArrayList<FoodEntry>();

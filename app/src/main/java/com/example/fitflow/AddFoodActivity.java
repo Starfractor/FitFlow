@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,8 @@ public class AddFoodActivity extends AppCompatActivity {
     private EditText editTime;
 
     private EditText editCals;
+
+    private TextView display;
     private Button buttonAdd;
     private Button buttonCancel;
 
@@ -30,6 +33,7 @@ public class AddFoodActivity extends AppCompatActivity {
         editFood = findViewById(R.id.editFood);
         editTime = findViewById(R.id.editTextTime);
         editCals = findViewById(R.id.editCalories);
+        display = findViewById(R.id.calorieDisplay);
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonCancel = findViewById(R.id.buttonCancel);
 
@@ -39,6 +43,7 @@ public class AddFoodActivity extends AppCompatActivity {
                 String food = editFood.getText().toString();
                 String time = editTime.getText().toString();
                 String cals = editCals.getText().toString();
+                String display_cals = display.getText().toString();
 
                 if (!food.isEmpty() && !time.isEmpty() && !cals.isEmpty()) {
                     // Perform your logic here to add food
@@ -51,6 +56,8 @@ public class AddFoodActivity extends AppCompatActivity {
                         LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
                         FoodEntry new_food = new FoodEntry(food, Integer.parseInt(cals), 1, current_time);
                         activeLog.foodLog.addEntry(new_food);
+                        String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
+                        display.setText(cal_string);
                         activeLog.foodLog.saveLog(AddFoodActivity.this);
                     }
                 } else {
