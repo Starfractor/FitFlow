@@ -71,41 +71,6 @@ public class activeLog {
 
     }
 
-    public static void exercise_load_data(Context context){
-        String today_date = "";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            today_date = LocalDate.now().toString();
-        }
-        File internal = context.getFilesDir();
-        File directory_exercise = new File(internal, "saved_data/exercise");
-        if (!directory_exercise.exists()) {
-            directory_exercise.mkdirs();
-        }
-
-        boolean found = false;
-
-        File[] exercise_files = directory_exercise.listFiles();
-        if(exercise_files != null){
-            for(File file : exercise_files){
-                if(file.getName().equals(today_date + ".ser")){
-                    found = true;
-                    //Load in new file
-                    try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(file))) {
-                        exerciseLog = (ExerciseLog) stream.readObject();
-                    } catch (IOException | ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-        if(!found){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                exerciseLog = new ExerciseLog(LocalDate.now());
-            }
-        }
-
-    }
-
     public static void water_load_data(Context context){
         String today_date = "";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -116,9 +81,7 @@ public class activeLog {
         if (!directory_water.exists()) {
             directory_water.mkdirs();
         }
-
         boolean found = false;
-
         File[] water_files = directory_water.listFiles();
         if(water_files != null){
             for(File file : water_files){
@@ -141,4 +104,22 @@ public class activeLog {
 
     }
 
+    public static void user_info_load_data(Context context){
+        File internal = context.getFilesDir();
+        File directory_user = new File(internal, "saved_data/user");
+        if (!directory_user.exists()) {
+            directory_user.mkdirs();
+        }
+        File user_file = new File(directory_user, "userInfo.ser");
+        if(user_file.exists()){
+            try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(user_file))) {
+                userInfo = (userInfo) stream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            userInfo = new userInfo(0,0,"","");
+        }
+    }
 }

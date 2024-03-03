@@ -69,5 +69,12 @@
             android:layout_height="60dp"
             android:text="Cancel" />
 
+        <TextView
+            android:id="@+id/waterDisplay"
+            android:layout_width="345dp"
+            android:layout_height="48dp"
+            android:alpha="0.8"
+            android:text="Today's water intake:  " />
+
     </LinearLayout>
 </LinearLayout>

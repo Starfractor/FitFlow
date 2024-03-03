@@ -37,6 +37,9 @@ public class AddFoodActivity extends AppCompatActivity {
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonCancel = findViewById(R.id.buttonCancel);
 
+        String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
+        display.setText(cal_string);
+
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
