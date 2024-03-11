@@ -72,5 +72,16 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Add onClickListener for the "Lifestyle Score" button
+        Button btnLifestyleScore = findViewById(R.id.btnLifestyleScore);
+
+        btnLifestyleScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, LifestyleScoreActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

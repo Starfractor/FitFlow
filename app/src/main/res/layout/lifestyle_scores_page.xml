@@ -2,35 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    >
 
     <TextView
         android:id="@+id/textViewLifestyleScores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Lifestyle Scores"
-        android:textSize="24sp" />
+        android:layout_marginTop="50dp"
+        android:text="Lifestyle Score"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
 
     <ProgressBar
         android:id="@+id/lifestyle_score_progress"
         style="@android:style/Widget.ProgressBar.Large.Inverse"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
         android:indeterminate="false"
         android:max="100"
-        android:progress="75"
-        android:progressDrawable="@drawable/circular_progress_bar" />
+        android:progress="75" />
 
     <TextView
         android:id="@+id/progress_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="75% (center it in circle)"
+        android:layout_marginTop="190dp"
+        android:layout_marginLeft="180dp"
+        android:text=""
         android:textColor="#000000"
-        android:textSize="24sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewCalories"
@@ -38,19 +42,19 @@
         android:layout_height="wrap_content"
         android:text="Calories Consumed:"
         android:textSize="18sp"
-        android:layout_below="@id/textViewLifestyleScores"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@id/lifestyle_score_progress"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="90dp"/>
 
     <TextView
         android:id="@+id/textViewSteps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Steps Taken:1"
+        android:text="Steps Taken:"
         android:textSize="18sp"
         android:layout_below="@id/textViewCalories"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="90dp"/>
 
     <TextView
         android:id="@+id/textViewWaterIntake"
@@ -59,7 +63,7 @@
         android:text="Water Intake:"
         android:textSize="18sp"
         android:layout_below="@id/textViewSteps"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="90dp"/>
 
 </RelativeLayout>

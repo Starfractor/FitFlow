@@ -42,11 +42,13 @@
         <activity
             android:name=".AddFoodActivity"
             android:exported="false" />
-        
-        <!-- Add the AddPersonalData activity -->
+
         <activity
             android:name=".AddPersonalData"
             android:exported="false" />
+
+        <activity android:name=".LifestyleScoreActivity">
+        </activity>
 
     </application>
 
