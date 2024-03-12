@@ -15,12 +15,30 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor sensor;
 
+    private int sensorType = Sensor.TYPE_STEP_COUNTER;
+    private boolean emulator = true;
     @Override
     public void onSensorChanged(android.hardware.SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
-            activeLog.userInfo.steps++;
-            activeLog.userInfo.saveInfo(this);
-            Log.e("Steps", "Steps: " + activeLog.userInfo.steps);
+        if (event.sensor.getType() == sensorType) {
+            if(Sensor.TYPE_GYROSCOPE == sensorType){
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+                float totalRotation = Math.abs(x) + Math.abs(y) + Math.abs(z);
+                if (totalRotation > 0.25) {
+                    //Emulate steps with gyroscope changes
+                    activeLog.userInfo.steps++;
+                    activeLog.userInfo.saveInfo(this);
+                    Log.e("Steps", "Steps: " + activeLog.userInfo.steps);
+                }
+            }else{
+                activeLog.userInfo.steps++;
+                activeLog.userInfo.saveInfo(this);
+                Log.e("Steps", "Steps: " + activeLog.userInfo.steps);
+            }
+
+
+
         }
     }
 
@@ -33,7 +51,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
     protected void onResume() {
         super.onResume();
         if (sensor != null) {
-            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
 
@@ -50,7 +68,9 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
 
 
 
-
+        if(emulator){
+            sensorType = Sensor.TYPE_GYROSCOPE;
+        }
         if(!activeLog.init) {
             activeLog.init_active();
             activeLog.water_load_data(this);
@@ -59,7 +79,7 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         }
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        sensor = sensorManager.getDefaultSensor(sensorType);
 
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
