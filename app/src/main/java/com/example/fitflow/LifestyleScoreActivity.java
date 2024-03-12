@@ -16,9 +16,9 @@ public class LifestyleScoreActivity extends AppCompatActivity {
         int stepsTaken = activeLog.foodLog.steps;
         int waterIntake = activeLog.waterLog.totalOz;
 
-        int caloriesRequested = 2000;
-        int stepsRequested = 2000;
-        int waterRequested = 2000;
+        int caloriesRequested = activeLog.userInfo.recommendedCalories;
+        int stepsRequested = activeLog.userInfo.recommendedSteps;
+        int waterRequested = (int) (activeLog.userInfo.recommendedLiters * 33.814);
 
         double caloriesRatio = (double) caloriesConsumed / caloriesRequested;
         double waterRatio = (double) waterIntake / waterRequested;
@@ -31,9 +31,9 @@ public class LifestyleScoreActivity extends AppCompatActivity {
         TextView textViewWaterIntake = findViewById(R.id.textViewWaterIntake);
         TextView textViewLifestyleScore = findViewById(R.id.progress_text);
 
-        textViewCalories.setText("Calories Consumed: " + caloriesConsumed);
-        textViewSteps.setText("Steps Taken: " + stepsTaken);
-        textViewWaterIntake.setText("Water Intake: " + waterIntake);
+        textViewCalories.setText("Calories: " + caloriesConsumed + "/" + caloriesRequested);
+        textViewSteps.setText("Steps Taken: " + stepsTaken + "/" + stepsRequested);
+        textViewWaterIntake.setText("Water Intake: " + waterIntake + "/" + waterRequested);
         textViewLifestyleScore.setText(lifestyleScorePercentage + "%");
     }
 

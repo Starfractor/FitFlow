@@ -65,6 +65,7 @@ public class AddPersonalData extends AppCompatActivity {
                             ", Sex: " + sex + ", Body Type: " + bodyType, Toast.LENGTH_SHORT).show();
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                         activeLog.userInfo = new userInfo(Integer.parseInt(height), Integer.parseInt(weight), sex, bodyType);
+                        activeLog.userInfo.calculateAndSetRecommendedGoals();
                         activeLog.userInfo.saveInfo(AddPersonalData.this);
                     }
                 } else {
