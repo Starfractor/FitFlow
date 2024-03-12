@@ -5,61 +5,15 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class HomeActivity extends AppCompatActivity implements SensorEventListener{
-
-    private SensorManager sensorManager;
-    private Sensor sensor;
-
-    private int sensorType = Sensor.TYPE_STEP_COUNTER;
-    private boolean emulator = true;
-    @Override
-    public void onSensorChanged(android.hardware.SensorEvent event) {
-        if (event.sensor.getType() == sensorType) {
-            if(Sensor.TYPE_GYROSCOPE == sensorType){
-                float x = event.values[0];
-                float y = event.values[1];
-                float z = event.values[2];
-                float totalRotation = Math.abs(x) + Math.abs(y) + Math.abs(z);
-                if (totalRotation > 0.25) {
-                    //Emulate steps with gyroscope changes
-                    activeLog.userInfo.steps++;
-                    activeLog.userInfo.saveInfo(this);
-                    Log.e("Steps", "Steps: " + activeLog.userInfo.steps);
-                }
-            }else{
-                activeLog.userInfo.steps++;
-                activeLog.userInfo.saveInfo(this);
-                Log.e("Steps", "Steps: " + activeLog.userInfo.steps);
-            }
+public class HomeActivity extends AppCompatActivity{
 
 
-
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (sensor != null) {
-            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        sensorManager.unregisterListener(this);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +21,6 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_home_page);
 
 
-
-        if(emulator){
-            sensorType = Sensor.TYPE_GYROSCOPE;
-        }
         if(!activeLog.init) {
             activeLog.init_active();
             activeLog.water_load_data(this);
@@ -78,8 +28,10 @@ public class HomeActivity extends AppCompatActivity implements SensorEventListen
             activeLog.user_info_load_data(this);
         }
 
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(sensorType);
+        Intent serviceIntent = new Intent(this, stepService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent);
+        }
 
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
