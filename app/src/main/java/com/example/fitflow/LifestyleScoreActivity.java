@@ -13,7 +13,7 @@ public class LifestyleScoreActivity extends AppCompatActivity {
         setContentView(R.layout.lifestyle_scores_page);
 
         int caloriesConsumed = activeLog.foodLog.totalCals;
-        int stepsTaken = activeLog.userInfo.steps;
+        int stepsTaken = activeLog.foodLog.steps;
         int waterIntake = activeLog.waterLog.totalOz;
 
         int caloriesRequested = 2000;

@@ -51,7 +51,7 @@ public class activeLog {
         File[] food_files = directory_food.listFiles();
         if(food_files != null){
             for(File file : food_files){
-                if(file.getName().equals(today_date + ".ser")){
+                if(file.getName().equals(MainActivity.username + today_date + ".ser")){
                     found = true;
                     //Load in new file
                     try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(file))) {
@@ -85,7 +85,7 @@ public class activeLog {
         File[] water_files = directory_water.listFiles();
         if(water_files != null){
             for(File file : water_files){
-                if(file.getName().equals(today_date + ".ser")){
+                if(file.getName().equals(MainActivity.username + today_date + ".ser")){
                     found = true;
                     //Load in new file
                     try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(file))) {
@@ -110,7 +110,7 @@ public class activeLog {
         if (!directory_user.exists()) {
             directory_user.mkdirs();
         }
-        File user_file = new File(directory_user, "userInfo.ser");
+        File user_file = new File(directory_user, MainActivity.username + "userInfo.ser");
         if(user_file.exists()){
             try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(user_file))) {
                 userInfo = (userInfo) stream.readObject();

@@ -2,6 +2,8 @@ package com.example.fitflow.Water_Food_Exercise_Data;
 
 import android.content.Context;
 
+import com.example.fitflow.MainActivity;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,17 +23,16 @@ public class userInfo implements Serializable {
 
     public int recommendedCals;
 
-    public int steps;
+
     public userInfo(int height, int weight, String sex, String bodyType){
         this.height = height;
         this.weight = weight;
         this.sex = sex;
         this.bodyType = bodyType;
         this.recommendedCals = 0; //init value
-        this.steps = 0;
     }
     public void saveInfo(Context context) {
-        File file = new File(context.getFilesDir(), "saved_data/user/userInfo.ser");
+        File file = new File(context.getFilesDir(), "saved_data/user/" + MainActivity.username + "userInfo.ser");
         try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(file))) {
             stream.writeObject(this);
             System.out.println("Saved userInfo");
