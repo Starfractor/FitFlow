@@ -2,16 +2,54 @@ package com.example.fitflow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements SensorEventListener{
+
+    private SensorManager sensorManager;
+    private Sensor sensor;
+
+    @Override
+    public void onSensorChanged(android.hardware.SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
+            activeLog.userInfo.steps++;
+            activeLog.userInfo.saveInfo(this);
+            Log.e("Steps", "Steps: " + activeLog.userInfo.steps);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sensor != null) {
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+
+
 
         if(!activeLog.init) {
             activeLog.init_active();
@@ -19,6 +57,10 @@ public class HomeActivity extends AppCompatActivity {
             activeLog.food_load_data(this);
             activeLog.user_info_load_data(this);
         }
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
