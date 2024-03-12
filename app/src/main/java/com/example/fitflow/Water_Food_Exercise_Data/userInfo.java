@@ -18,11 +18,17 @@ public class userInfo implements Serializable {
     public int weight;
     public String sex;
     public String bodyType;
+
+    public int recommendedCals;
+
+    public int steps;
     public userInfo(int height, int weight, String sex, String bodyType){
         this.height = height;
         this.weight = weight;
         this.sex = sex;
         this.bodyType = bodyType;
+        this.recommendedCals = 0; //init value
+        this.steps = 0;
     }
     public void saveInfo(Context context) {
         File file = new File(context.getFilesDir(), "saved_data/user/userInfo.ser");

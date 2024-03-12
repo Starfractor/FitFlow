@@ -1,6 +1,8 @@
 package com.example.fitflow;
 
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
+
+
 
         // Set an OnClickListener for the login button
         buttonLogin.setOnClickListener(new View.OnClickListener() {

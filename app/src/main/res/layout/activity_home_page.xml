@@ -49,11 +49,19 @@
             android:layout_marginTop="50dp"/>
 
         <Button
+            android:id="@+id/btnLifestyleScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lifestyle Score"
+            android:layout_below="@id/btnAddWaterIntake"
+            android:layout_marginTop="50dp"/>
+
+        <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Logout"
-            android:layout_below="@id/btnAddWaterIntake"
+            android:layout_below="@id/btnLifestyleScore"
             android:layout_marginTop="50dp"/>
     </RelativeLayout>
 </ScrollView>
