@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private MaterialButton buttonLogin;
 
+    public static String username = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isValidCredentials(email, password)) {
                     // Successful login
                     Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    username = email;
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                 } else {

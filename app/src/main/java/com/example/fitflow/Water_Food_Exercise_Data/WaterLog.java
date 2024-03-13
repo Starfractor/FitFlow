@@ -2,6 +2,8 @@ package com.example.fitflow.Water_Food_Exercise_Data;
 
 import android.content.Context;
 
+import com.example.fitflow.MainActivity;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,7 +26,7 @@ public class WaterLog implements Serializable {
         this.totalOz = 0;
     }
     public void saveLog(Context context){
-        String ending = this.date.toString() + ".ser";
+        String ending = MainActivity.username + this.date.toString() + ".ser";
         File file = new File(context.getFilesDir(), "saved_data/water/" + ending);
         try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(file))) {
             stream.writeObject(this);

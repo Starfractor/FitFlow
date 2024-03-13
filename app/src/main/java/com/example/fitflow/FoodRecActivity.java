@@ -12,10 +12,4 @@ public class FoodRecActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.food_recommendation);
     }
-    private void getLocation(){
-
-    }
-    private void requestLocationPermissions(){
-
-    }
 }

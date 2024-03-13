@@ -72,14 +72,14 @@ public class stepService extends Service implements SensorEventListener {
                 float totalRotation = Math.abs(x) + Math.abs(y) + Math.abs(z);
                 if (totalRotation > 0.25) {
                     //Emulate steps with gyroscope changes
-                    activeLog.userInfo.steps++;
-                    activeLog.userInfo.saveInfo(this);
-                    Log.e("Steps", "Steps: " + activeLog.userInfo.steps);
+                    activeLog.foodLog.steps++;
+                    activeLog.foodLog.saveLog(this);
+                    Log.e("Steps", "Steps: " + activeLog.foodLog.steps);
                 }
             }else{
-                activeLog.userInfo.steps++;
-                activeLog.userInfo.saveInfo(this);
-                Log.e("Steps", "Steps: " + activeLog.userInfo.steps);
+                activeLog.foodLog.steps++;
+                activeLog.foodLog.saveLog(this);
+                Log.e("Steps", "Steps: " + activeLog.foodLog.steps);
             }
     }}
 

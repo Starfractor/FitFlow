@@ -15,13 +15,14 @@ import com.example.fitflow.Water_Food_Exercise_Data.userInfo;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class AddPersonalData extends AppCompatActivity {
 
     private EditText editTextHeight;
     private EditText editTextWeight;
     private EditText editSex;
-    private EditText editTextBodyType;
+    private EditText editTextAge;
     private Button buttonAdd;
     private Button buttonCancel;
     private TextView display;
@@ -34,19 +35,19 @@ public class AddPersonalData extends AppCompatActivity {
         editTextHeight = findViewById(R.id.editTextHeight);
         editTextWeight = findViewById(R.id.editTextWeight);
         editSex = findViewById(R.id.editSex);
-        editTextBodyType = findViewById(R.id.editTextBodyType);
+        editTextAge = findViewById(R.id.editTextAge);
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonCancel = findViewById(R.id.buttonCancel);
 
         String height = editTextHeight.getText().toString();
         String weight = editTextWeight.getText().toString();
         String sex = editSex.getText().toString();
-        String bodyType = editTextBodyType.getText().toString();
+        String age = editTextAge.getText().toString();
 
         editTextHeight.setText(Integer.toString(activeLog.userInfo.height));
         editTextWeight.setText(Integer.toString(activeLog.userInfo.weight));
         editSex.setText(activeLog.userInfo.sex);
-        editTextBodyType.setText(activeLog.userInfo.bodyType);
+        editTextAge.setText(Integer.toString(activeLog.userInfo.age));
 
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
@@ -55,18 +56,19 @@ public class AddPersonalData extends AppCompatActivity {
                 String height = editTextHeight.getText().toString();
                 String weight = editTextWeight.getText().toString();
                 String sex = editSex.getText().toString();
-                String bodyType = editTextBodyType.getText().toString();
+                String age = editTextAge.getText().toString();
                 // Check if all fields are filled
-                Log.e("random", height + "|" + weight + "|" + sex + "|" + bodyType);
-                if (!height.isEmpty() && !weight.isEmpty() && !sex.isEmpty() && !bodyType.isEmpty()) {
+                Log.e("random", height + "|" + weight + "|" + sex + "|" + age);
+                if (!height.isEmpty() && !weight.isEmpty() && !sex.isEmpty() && !age.isEmpty()) {
                     // Perform your logic here to add personal data
                     // For now, let's just display a toast message
                     Toast.makeText(AddPersonalData.this, "Height: " + height + ", Weight: " + weight +
-                            ", Sex: " + sex + ", Body Type: " + bodyType, Toast.LENGTH_SHORT).show();
+                            ", Sex: " + sex + ", Age: " + age, Toast.LENGTH_SHORT).show();
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        int tempSteps = activeLog.userInfo.steps;
-                        activeLog.userInfo = new userInfo(Integer.parseInt(height), Integer.parseInt(weight), sex, bodyType);
-                        activeLog.userInfo.steps = tempSteps;
+                        ArrayList<String> old_preferences = activeLog.userInfo.foodPreferences;
+                        activeLog.userInfo = new userInfo(Integer.parseInt(height), Integer.parseInt(weight), sex, Integer.parseInt(age));
+                        activeLog.userInfo.foodPreferences = old_preferences;
+                        activeLog.userInfo.calculateAndSetRecommendedGoals();
                         activeLog.userInfo.saveInfo(AddPersonalData.this);
                     }
                 } else {

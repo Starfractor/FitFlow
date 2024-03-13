@@ -2,6 +2,8 @@ package com.example.fitflow.Water_Food_Exercise_Data;
 
 import android.content.Context;
 
+import com.example.fitflow.MainActivity;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,10 +22,13 @@ public class FoodLog implements Serializable {
     private LocalDate date;
     public int totalCals;
 
+    public int steps;
+
     public FoodLog(LocalDate date){
         entries = new ArrayList<FoodEntry>();
         this.date = date;
         this.totalCals = 0;
+        this.steps = 0;
     }
 
     public void addEntry(FoodEntry food){
@@ -42,7 +47,7 @@ public class FoodLog implements Serializable {
     }
 
     public void saveLog(Context context){
-        String ending = this.date.toString() + ".ser";
+        String ending = MainActivity.username + this.date.toString() + ".ser";
         File file = new File(context.getFilesDir(), "saved_data/food/" + ending);
         try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(file))) {
             stream.writeObject(this);
