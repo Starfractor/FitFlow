@@ -15,6 +15,7 @@ import com.example.fitflow.Water_Food_Exercise_Data.userInfo;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class AddPersonalData extends AppCompatActivity {
 
@@ -64,7 +65,9 @@ public class AddPersonalData extends AppCompatActivity {
                     Toast.makeText(AddPersonalData.this, "Height: " + height + ", Weight: " + weight +
                             ", Sex: " + sex + ", Age: " + age, Toast.LENGTH_SHORT).show();
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        ArrayList<String> old_preferences = activeLog.userInfo.foodPreferences;
                         activeLog.userInfo = new userInfo(Integer.parseInt(height), Integer.parseInt(weight), sex, Integer.parseInt(age));
+                        activeLog.userInfo.foodPreferences = old_preferences;
                         activeLog.userInfo.calculateAndSetRecommendedGoals();
                         activeLog.userInfo.saveInfo(AddPersonalData.this);
                     }
