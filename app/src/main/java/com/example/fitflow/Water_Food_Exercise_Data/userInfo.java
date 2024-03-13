@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /*
 TBD. Stores information like weight, height, etc.
@@ -25,6 +26,8 @@ public class userInfo implements Serializable {
     public int recommendedLiters;
     public int recommendedSteps;
 
+    public ArrayList<String> foodPreferences;
+
 
     public userInfo(int height, int weight, String sex, int age){
         this.height = height;
@@ -32,6 +35,7 @@ public class userInfo implements Serializable {
         this.sex = sex;
         this.age = age;
         this.recommendedCalories = 0; //init value
+        this.foodPreferences = new ArrayList<String>();
     }
     public void saveInfo(Context context) {
         File file = new File(context.getFilesDir(), "saved_data/user/" + MainActivity.username + "userInfo.ser");
