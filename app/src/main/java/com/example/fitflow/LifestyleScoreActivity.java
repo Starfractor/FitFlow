@@ -31,9 +31,9 @@ public class LifestyleScoreActivity extends AppCompatActivity {
         TextView textViewWaterIntake = findViewById(R.id.textViewWaterIntake);
         TextView textViewLifestyleScore = findViewById(R.id.progress_text);
 
-        textViewCalories.setText("Calories: " + caloriesConsumed + "/" + caloriesRequested);
-        textViewSteps.setText("Steps Taken: " + stepsTaken + "/" + stepsRequested);
-        textViewWaterIntake.setText("Water Intake: " + waterIntake + "/" + waterRequested);
+        textViewCalories.setText("Calories: " + caloriesConsumed + "/" + caloriesRequested + " cals");
+        textViewSteps.setText("Steps Taken: " + stepsTaken + "/" + stepsRequested + " steps");
+        textViewWaterIntake.setText("Water Intake: " + waterIntake + "/" + waterRequested + " oz");
         textViewLifestyleScore.setText(lifestyleScorePercentage + "%");
     }
 
