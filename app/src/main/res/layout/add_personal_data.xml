@@ -76,14 +76,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0.8"
-            android:text="Body Type"
+            android:text="Age"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextBodyType"
+            android:id="@+id/editTextAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:inputType="number" />
 
         <View
             android:layout_width="wrap_content"

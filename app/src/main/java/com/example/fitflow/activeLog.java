@@ -22,6 +22,7 @@ import com.example.fitflow.Water_Food_Exercise_Data.WaterLog;
 import com.example.fitflow.Water_Food_Exercise_Data.userInfo;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 public class activeLog {
     public static ExerciseLog exerciseLog;
@@ -119,7 +120,8 @@ public class activeLog {
             }
         }
         else{
-            userInfo = new userInfo(0,0,"","");
+            userInfo = new userInfo(0,0,"",0);
+            userInfo.calculateAndSetRecommendedGoals();
         }
     }
 }

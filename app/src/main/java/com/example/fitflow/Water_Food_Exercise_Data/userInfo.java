@@ -19,18 +19,18 @@ public class userInfo implements Serializable {
     public int height;
     public int weight;
     public String sex;
-    public String bodyType;
+    public int age;
 
     public int recommendedCalories;
     public int recommendedLiters;
     public int recommendedSteps;
 
 
-    public userInfo(int height, int weight, String sex, String bodyType){
+    public userInfo(int height, int weight, String sex, int age){
         this.height = height;
         this.weight = weight;
         this.sex = sex;
-        this.bodyType = bodyType;
+        this.age = age;
         this.recommendedCalories = 0; //init value
     }
     public void saveInfo(Context context) {

@@ -20,9 +20,9 @@ public class LifestyleScoreActivity extends AppCompatActivity {
         int stepsRequested = activeLog.userInfo.recommendedSteps;
         int waterRequested = (int) (activeLog.userInfo.recommendedLiters * 33.814);
 
-        double caloriesRatio = (double) caloriesConsumed / caloriesRequested;
-        double waterRatio = (double) waterIntake / waterRequested;
-        double stepsRatio = (double) stepsTaken / stepsRequested;
+        double caloriesRatio = Math.min((double) caloriesConsumed / caloriesRequested, 0.3333);
+        double waterRatio = Math.min((double) waterIntake / waterRequested, 0.3333);
+        double stepsRatio = Math.min((double) stepsTaken / stepsRequested, 0.3333);
 
         int lifestyleScorePercentage = (int) Math.round((caloriesRatio + waterRatio + stepsRatio) * 100 / 3);
 
