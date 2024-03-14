@@ -1,4 +1,4 @@
-Food_ID,Name,Calories,C_Type,Veg_Non,Describe
+Food_ID,Name,Calories,Food_Type,Veg_Non,Describe
 1,summer squash salad,150,Healthy Food,veg,"white balsamic vinegar, lemon juice, lemon rind, red chillies, garlic cloves (crushed), olive oil, summer squash (zucchini), sea salt, black pepper, basil leaves"
 2,chicken minced salad,320,Healthy Food,non-veg,"olive oil, chicken mince, garlic (minced), onion, salt, black pepper, carrot, cabbage, green onions, sweet chilli sauce, peanut butter, ginger, soy sauce, fresh cilantro, red pepper flakes (crushed), tarts"
 3,sweet chilli almonds,200,Snack,veg,"almonds whole, egg white, curry leaves, salt, sugar (fine grain), red chilli powder"
@@ -12,7 +12,7 @@ Food_ID,Name,Calories,C_Type,Veg_Non,Describe
 11,coconut lime quinoa salad,350,Healthy Food,veg,"uncooked quinoa, water, red onion, cucumber (diced), purple cabbage, avocado (ripened and diced), orange, shelled edamame (defrosted), unsweetened toasted coconut flakes, almonds, few shakes of black pepper, for the dressing:, orange juice, lime (juiced), apple cider vinegar, olive oil"
 12,lemon honey glazed sous vide corn on the cob,180,Snack,non-veg,"young corn on the cob, honey, lemon juice, garlic cloves (smashed), celery stalk, chives, carrot, salt, paprika powder, parsley, plastic bag, food thermometer"
 13,watermelon and strawberry smoothie,150,Healthy Food,veg,"fresh strawberries, honey, low fat yogurt, watermelon, chia seeds"
-14,peach, raspberry and nuts smoothie,200,Healthy Food,veg,"fresh raspberries, ripe banana, almond, fresh peach slices, low fat yogurt, fresh raspberry, peach fruit slices, almonds"
+14,peach raspberry and nuts smoothie,200,Healthy Food,veg,"fresh raspberries, ripe banana, almond, fresh peach slices, low fat yogurt, fresh raspberry, peach fruit slices, almonds"
 15,almond and cranberry poha,220,Indian,veg,"almond flakes, onion, poha, cranberries (frozen/ dried), salt, oil, curry leaves, green chilies, fresh coconut"
 16,almond and raw banana galawat,280,Indian,veg,"almond slivers, raw banana (boiled), almond paste, cooking cream, refined oil, mace powder, cardamom powder , ginger garlic paste, garam masala powder, red chilli powder, salt, tempura batter"
 17,baked namakpara with roasted almond dip,210,Snack,veg,"almonds (crushed), tomato, garlic cloves, basil sprig, lemon, salt, pepper, for namak para:, refined flour, sugar, salt, olive oil, water"
@@ -395,7 +395,7 @@ Food_ID,Name,Calories,C_Type,Veg_Non,Describe
 394,Fig and Sesame Tart with Cardamom Orange Cream,420,Dessert,non-veg,"All-purpose flour, sugar, salt, unsalted butter, egg yolk, heavy cream, cinnamon, orange zest, fig, sesame seeds, mild honey"
 395,Rouille,90,French,veg,"Bread crumbs, cayenne, extra-virgin olive oil, coarse sea salt, garlic"
 396,Kimchi Toast,130,Korean,veg,"Cream cheese, chopped kimchi, scallions, country-style bread, sesame seeds, cilantro leaves"
-397,Tacos de Gobernador (Shrimp, Poblano, and Cheese Tacos),330,Mexican,non-veg,"Poblano chiles, bacon, shrimp, red salsa, garlic, corn tortillas, lime juice"
+397,Tacos de Gobernador (Shrimp Poblano and Cheese Tacos),330,Mexican,non-veg,"Poblano chiles, bacon, shrimp, red salsa, garlic, corn tortillas, lime juice"
 398,Melted Broccoli Pasta With Capers and Anchovies,410,French,non-veg,"Broccoli, bread crumbs, anchovy fillets, garlic cloves, red pepper flakes, penne pasta, olive oil"
 399,Lemon-Ginger Cake with Pistachios,360,Dessert,non-veg,"Egg yolks, lemon juice, unsalted butter, all-purpose flour, sugar, ginger, milk"
 400,Rosemary Roasted Vegetables,230,Healthy Food,veg,"Kosher salt, rosemary, garlic, potato, olive oil, carrot, walnut, cheese, ground pepper"
