@@ -86,6 +86,17 @@ public class HomeActivity extends AppCompatActivity{
             }
         });
 
+        // Add OnClickListener for the "Food Preferences" button
+        Button btnFoodPreferences = findViewById(R.id.btnFoodPreferences);
+        btnFoodPreferences.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to AddFoodActivity
+                Intent intent = new Intent(HomeActivity.this, FoodPreferencesActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Add onClickListener for the "Lifestyle Score" button
         Button btnLifestyleScore = findViewById(R.id.btnLifestyleScore);
 

@@ -51,6 +51,10 @@
             android:name=".AddPersonalData"
             android:exported="false" />
 
+        <activity
+            android:name=".FoodPreferencesActivity"
+            android:exported="false" />
+
         <activity android:name=".LifestyleScoreActivity">
         </activity>
 
