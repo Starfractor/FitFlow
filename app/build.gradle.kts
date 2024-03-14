@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
-}
+    id("com.chaquo.python")
+}   
 
 android {
     namespace = "com.example.fitflow"
@@ -14,6 +15,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters += listOf("arm64-v8a", "x86_64")
+        }
     }
 
     buildTypes {
@@ -28,6 +33,18 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+}
+
+chaquopy {
+    defaultConfig {
+        version = "3.8"
+
+        pip {
+            // A requirement specifier, with or without a version number:
+            install("pandas")
+            install("scikit-learn")
+        }
     }
 }
 
