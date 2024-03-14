@@ -5,12 +5,18 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class LifestyleScoreActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lifestyle_scores_page);
+
+        String currentDate = new SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(new Date());
 
         int caloriesConsumed = activeLog.foodLog.totalCals;
         int stepsTaken = activeLog.foodLog.steps;
@@ -30,11 +36,13 @@ public class LifestyleScoreActivity extends AppCompatActivity {
         TextView textViewSteps = findViewById(R.id.textViewSteps);
         TextView textViewWaterIntake = findViewById(R.id.textViewWaterIntake);
         TextView textViewLifestyleScore = findViewById(R.id.progress_text);
+        TextView dateTextView = findViewById(R.id.dateTextView);
 
         textViewCalories.setText("Calories: " + caloriesConsumed + "/" + caloriesRequested + " cals");
         textViewSteps.setText("Steps Taken: " + stepsTaken + "/" + stepsRequested + " steps");
         textViewWaterIntake.setText("Water Intake: " + waterIntake + "/" + waterRequested + " oz");
         textViewLifestyleScore.setText(lifestyleScorePercentage + "%");
+        dateTextView.setText(currentDate);
     }
 
 
