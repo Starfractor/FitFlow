@@ -62,11 +62,12 @@
             android:text="Sex"
             android:textStyle="bold" />
 
-        <EditText
+        <Spinner
             android:id="@+id/editSex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:background="@drawable/spinner_border"/>
+
 
         <View
             android:layout_width="wrap_content"
