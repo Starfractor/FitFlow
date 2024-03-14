@@ -3,8 +3,10 @@ package com.example.fitflow;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +23,12 @@ public class AddPersonalData extends AppCompatActivity {
 
     private EditText editTextHeight;
     private EditText editTextWeight;
-    private EditText editSex;
+    private Spinner editSex;
     private EditText editTextAge;
     private Button buttonAdd;
     private Button buttonCancel;
     private TextView display;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,24 +42,29 @@ public class AddPersonalData extends AppCompatActivity {
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonCancel = findViewById(R.id.buttonCancel);
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.sex_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        editSex.setAdapter(adapter);
+
         String height = editTextHeight.getText().toString();
         String weight = editTextWeight.getText().toString();
-        String sex = editSex.getText().toString();
+        String sex = editSex.getSelectedItem().toString();
         String age = editTextAge.getText().toString();
+
 
         editTextHeight.setText(Integer.toString(activeLog.userInfo.height));
         editTextWeight.setText(Integer.toString(activeLog.userInfo.weight));
-        editSex.setText(activeLog.userInfo.sex);
         editTextAge.setText(Integer.toString(activeLog.userInfo.age));
-
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String height = editTextHeight.getText().toString();
                 String weight = editTextWeight.getText().toString();
-                String sex = editSex.getText().toString();
+                String sex = editSex.getSelectedItem().toString();
                 String age = editTextAge.getText().toString();
+
                 // Check if all fields are filled
                 Log.e("random", height + "|" + weight + "|" + sex + "|" + age);
                 if (!height.isEmpty() && !weight.isEmpty() && !sex.isEmpty() && !age.isEmpty()) {
@@ -83,5 +91,10 @@ public class AddPersonalData extends AppCompatActivity {
                 finish();
             }
         });
+
+
+
+
+
     }
 }

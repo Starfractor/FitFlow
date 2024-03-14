@@ -65,5 +65,16 @@
         android:layout_below="@id/textViewSteps"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="90dp"/>
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="160dp"
+        android:text="Date will be here"
+        android:layout_marginTop="16dp"/>
+
+
+
+
 
 </RelativeLayout>
