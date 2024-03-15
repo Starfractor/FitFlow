@@ -80,12 +80,28 @@
             android:layout_height="60dp"
             android:text="Add" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonCancel"
-            app:cornerRadius="32dp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Cancel" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonQuickSnack"
+                app:cornerRadius="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Quick Snack (150 cals)" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonQuickMeal"
+                app:cornerRadius="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Quick Meal (600 cals)" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/calorieDisplay"
@@ -93,6 +109,13 @@
             android:layout_height="48dp"
             android:alpha="0.8"
             android:text="Calories eaten today: " />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonCancel"
+            app:cornerRadius="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Cancel" />
 
     </LinearLayout>
 </LinearLayout>
