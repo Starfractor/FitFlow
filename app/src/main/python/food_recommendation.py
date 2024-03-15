@@ -61,7 +61,7 @@ def recommend_food(query, max_calories, indian, chinese, italian, japanese, mexi
     recommended_foods = []
     for index, score in sorted_scores:
         if data['Calories'].iloc[index] <= max_calories:
-            recommended_foods.append(data['Name'].iloc[index])
+            recommended_foods.append(f"{data['Name'].iloc[index]} - {data['Calories'].iloc[index]} cals\n")
             if len(recommended_foods) == 10:
                 break
 
