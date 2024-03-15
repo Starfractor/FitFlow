@@ -3,7 +3,7 @@ from os.path import dirname, join
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
-def recommend_food(query, max_calories):
+def recommend_food(query, max_calories, indian, chinese, italian, japanese, mexican, vegetarian, vegan, gluten_free):
     csv_file_path = join(dirname(__file__), "food_data.csv")
 
     # Read the CSV file
@@ -34,6 +34,24 @@ def recommend_food(query, max_calories):
             score += 1
         if query.lower() in row['Describe'].lower():
             score += 1
+
+        if indian and row['Food_Type'].lower() == 'indian':
+            score *= 1.2
+        if chinese and row['Food_Type'].lower() == 'chinese':
+            score *= 1.2
+        if italian and row['Food_Type'].lower() == 'italian':
+            score *= 1.2
+        if japanese and row['Food_Type'].lower() == 'japanese':
+            score *= 1.2
+        if mexican and row['Food_Type'].lower() == 'mexican':
+            score *= 1.2
+        if vegetarian and row['Veg_Non'].lower() == 'vegetarian':
+            score *= 1.2
+        if vegan and row['Veg_Non'].lower() == 'veg':
+            score *= 1.2
+        if gluten_free and row['Food_Type'].lower() == 'healthy food':
+            score *= 1.2
+
         scores[index] = score
     
     # Sort the food items based on the calculated scores

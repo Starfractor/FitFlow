@@ -3,17 +3,18 @@ package com.example.fitflow;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.chaquo.python.android.AndroidPlatform;
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
-import com.chaquo.python.android.AndroidPlatform;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FoodRecActivity extends AppCompatActivity {
@@ -30,7 +31,9 @@ public class FoodRecActivity extends AppCompatActivity {
         context = this; // Initialize the Context variable
 
         // Start Python with AndroidPlatform
-        Python.start(new AndroidPlatform(context));
+        if (!Python.isStarted()) {
+            Python.start(new AndroidPlatform(context));
+        }
 
         queryEditText = findViewById(R.id.queryEditText);
         searchButton = findViewById(R.id.searchButton);
@@ -68,9 +71,50 @@ public class FoodRecActivity extends AppCompatActivity {
     }
 
     private void handleQuery(String query) {
+        // Get max calories
         int maxCalories = Math.max(activeLog.userInfo.recommendedCalories - activeLog.foodLog.totalCals, 0);
+
+        // Get user preferences
+        ArrayList<String> foodPreferences = activeLog.userInfo.foodPreferences;
+        boolean indian = false;
+        boolean chinese = false;
+        boolean italian = false;
+        boolean japanese = false;
+        boolean mexican = false;
+        boolean vegetarian = false;
+        boolean vegan = false;
+        boolean glutenFree = false;
+        for (String preference : foodPreferences) {
+            switch (preference) {
+                case "Indian":
+                    indian = true;
+                    break;
+                case "Chinese":
+                    chinese = true;
+                    break;
+                case "Italian":
+                    italian = true;
+                    break;
+                case "Japanese":
+                    japanese = true;
+                    break;
+                case "Mexican":
+                    mexican = true;
+                    break;
+                case "Vegetarian":
+                    vegetarian = true;
+                    break;
+                case "Vegan":
+                    vegan = true;
+                    break;
+                case "Gluten-free":
+                    glutenFree = true;
+                    break;
+            }
+        }
+    
         Python python = Python.getInstance();
-        PyObject pyObject = python.getModule("food_recommendation").callAttr("recommend_food", query, maxCalories);
+        PyObject pyObject = python.getModule("food_recommendation").callAttr("recommend_food", query, maxCalories, indian, chinese, italian, japanese, mexican, vegetarian, vegan, glutenFree);
 
         try {
             List<PyObject> pyList = pyObject.asList();
