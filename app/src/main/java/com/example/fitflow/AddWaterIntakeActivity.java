@@ -36,6 +36,8 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
 
         display = findViewById(R.id.waterDisplay);
         buttonAdd = findViewById(R.id.buttonAdd);
+        Button buttonCupWater = findViewById(R.id.buttonCupWater);
+        Button buttonBottleWater = findViewById(R.id.buttonBottleWater);
         buttonCancel = findViewById(R.id.buttonCancel);
 
         String cal_string = "Today's water intake: " + Integer.toString(activeLog.waterLog.totalOz) + " oz";
@@ -71,11 +73,79 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
             }
         });
 
+        buttonCupWater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the entered water intake and time
+                String water = "8";
+                String time = getCurrentTime();
+                String display_water = display.getText().toString();
+
+                // Check if both fields are not empty
+                if (!water.isEmpty() && !time.isEmpty()) {
+                    // Add your logic here to handle adding water intake
+                    // For now, just displaying a toast message
+                    Toast.makeText(AddWaterIntakeActivity.this, "Water: " + water + " oz, Time: " + time, Toast.LENGTH_SHORT).show();
+                    editWater.setText("");
+                    editTime.setText("");
+                    count += 1;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
+                        WaterEntry new_water = new WaterEntry(Integer.toString(count), Integer.parseInt(water), current_time);
+                        activeLog.waterLog.addEntry(new_water);
+                        String cal_string = "Today's water intake: " + Integer.toString(activeLog.waterLog.totalOz) + " oz";
+                        display.setText(cal_string);
+                        activeLog.waterLog.saveLog(AddWaterIntakeActivity.this);
+                    }
+                } else {
+                    Toast.makeText(AddWaterIntakeActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        buttonBottleWater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the entered water intake and time
+                String water = "24";
+                String time = getCurrentTime();
+                String display_water = display.getText().toString();
+
+                // Check if both fields are not empty
+                if (!water.isEmpty() && !time.isEmpty()) {
+                    // Add your logic here to handle adding water intake
+                    // For now, just displaying a toast message
+                    Toast.makeText(AddWaterIntakeActivity.this, "Water: " + water + " oz, Time: " + time, Toast.LENGTH_SHORT).show();
+                    editWater.setText("");
+                    editTime.setText("");
+                    count += 1;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
+                        WaterEntry new_water = new WaterEntry(Integer.toString(count), Integer.parseInt(water), current_time);
+                        activeLog.waterLog.addEntry(new_water);
+                        String cal_string = "Today's water intake: " + Integer.toString(activeLog.waterLog.totalOz) + " oz";
+                        display.setText(cal_string);
+                        activeLog.waterLog.saveLog(AddWaterIntakeActivity.this);
+                    }
+                } else {
+                    Toast.makeText(AddWaterIntakeActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });        
+
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish(); // Close the activity when "Cancel" button is clicked
             }
         });
+    }
+
+    // Method to get current time
+    private String getCurrentTime() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            return LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm"));
+        }
+        return ""; // Return empty string
     }
 }

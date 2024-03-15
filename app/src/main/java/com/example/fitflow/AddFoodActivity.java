@@ -128,6 +128,6 @@ public class AddFoodActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             return LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm"));
         }
-        return ""; // Return empty strin
+        return ""; // Return empty string
     }
 }
