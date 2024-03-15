@@ -62,6 +62,12 @@ public class AddFoodActivity extends AppCompatActivity {
                         String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
                         display.setText(cal_string);
                         activeLog.foodLog.saveLog(AddFoodActivity.this);
+                        LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+                        LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
+                        if (nextMealTime != null) {
+                            NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
+                            NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
+                        }
                     }
                 } else {
                     Toast.makeText(AddFoodActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
@@ -86,9 +92,15 @@ public class AddFoodActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Add Quick Snack
                 String food = "Quick Snack";
-                String cals = "150"; // Set calories for Quick Snack
-                String time = getCurrentTime(); // Get current time
-                addFoodEntry(food, cals, time); // Call method to add food entry
+                String cals = "150"; 
+                String time = getCurrentTime();
+                addFoodEntry(food, cals, time);
+                LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+                LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
+                if (nextMealTime != null) {
+                    NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
+                    NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
+                }
             }
         });
 
@@ -98,9 +110,15 @@ public class AddFoodActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Add Quick Meal
                 String food = "Quick Meal";
-                String cals = "600"; // Set calories for Quick Meal
-                String time = getCurrentTime(); // Get current time
-                addFoodEntry(food, cals, time); // Call method to add food entry
+                String cals = "600"; 
+                String time = getCurrentTime();
+                addFoodEntry(food, cals, time);
+                LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+                LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
+                if (nextMealTime != null) {
+                    NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
+                    NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
+                }
             }
         });
     }

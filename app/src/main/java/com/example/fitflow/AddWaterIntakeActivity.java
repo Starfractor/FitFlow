@@ -66,6 +66,12 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
                         String cal_string = "Today's water intake: " + Integer.toString(activeLog.waterLog.totalOz) + " oz";
                         display.setText(cal_string);
                         activeLog.waterLog.saveLog(AddWaterIntakeActivity.this);
+                        LocalTime waterTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+                        LocalTime nextWaterTime = NotificationService.calculateNextWaterTime(waterTime, Integer.parseInt(water), activeLog.waterLog.totalOz);
+                        if (nextWaterTime != null) {
+                            NotificationService.cancelNotification(AddWaterIntakeActivity.this, "Water Reminder");
+                            NotificationService.scheduleNotification(AddWaterIntakeActivity.this, "Water Reminder", "Don't forget to drink!", nextWaterTime);
+                        }
                     }
                 } else {
                     Toast.makeText(AddWaterIntakeActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
@@ -96,6 +102,11 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
                         String cal_string = "Today's water intake: " + Integer.toString(activeLog.waterLog.totalOz) + " oz";
                         display.setText(cal_string);
                         activeLog.waterLog.saveLog(AddWaterIntakeActivity.this);
+                        LocalTime nextWaterTime = NotificationService.calculateNextWaterTime(current_time, Integer.parseInt(water), activeLog.waterLog.totalOz);
+                        if (nextWaterTime != null) {
+                            NotificationService.cancelNotification(AddWaterIntakeActivity.this, "Water Reminder");
+                            NotificationService.scheduleNotification(AddWaterIntakeActivity.this, "Water Reminder", "Don't forget to drink!", nextWaterTime);
+                        }
                     }
                 } else {
                     Toast.makeText(AddWaterIntakeActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
@@ -126,6 +137,11 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
                         String cal_string = "Today's water intake: " + Integer.toString(activeLog.waterLog.totalOz) + " oz";
                         display.setText(cal_string);
                         activeLog.waterLog.saveLog(AddWaterIntakeActivity.this);
+                        LocalTime nextWaterTime = NotificationService.calculateNextWaterTime(current_time, Integer.parseInt(water), activeLog.waterLog.totalOz);
+                        if (nextWaterTime != null) {
+                            NotificationService.cancelNotification(AddWaterIntakeActivity.this, "Water Reminder");
+                            NotificationService.scheduleNotification(AddWaterIntakeActivity.this, "Water Reminder", "Don't forget to drink!", nextWaterTime);
+                        }
                     }
                 } else {
                     Toast.makeText(AddWaterIntakeActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
