@@ -1,67 +1,51 @@
 import pandas as pd
-from os.path import dirname, join
+from os.path import join, dirname
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
 def recommend_food(query, max_calories, indian, chinese, italian, japanese, mexican, vegetarian, vegan, gluten_free):
     csv_file_path = join(dirname(__file__), "food_data.csv")
 
-    # Read the CSV file
+    # Setup the CSV file
     data = pd.read_csv(csv_file_path)
-
-    # Handling missing values
     data.fillna('', inplace=True)
 
-    # Step 2: Feature Extraction
-    # Combine description and food type to create input for TF-IDF
+    # Create numerical features using TF-IDF
     data['Features'] = data['Name'] + ' ' + data['Food_Type'] + ' ' + data['Describe']
-
-    # Convert text data (name + food type + description) into numerical features using TF-IDF
     tfidf_vectorizer = TfidfVectorizer(stop_words='english')
     tfidf_matrix = tfidf_vectorizer.fit_transform(data['Features'])
 
-    # Step 3: Similarity Calculation
-    # Compute cosine similarity matrix
-    cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+    # Compute cosine similarity between query and food items
+    query_tfidf = tfidf_vectorizer.transform([query])
+    cosine_sim = linear_kernel(query_tfidf, tfidf_matrix).flatten()
 
-    # Calculate the similarity scores for each food item based on name, food type, and description
-    scores = {}
-    for index, row in data.iterrows():
-        score = 0
-        if query.lower() in row['Name'].lower():
-            score += 1.5
-        if query.lower() in row['Food_Type'].lower():
-            score += 1
-        if query.lower() in row['Describe'].lower():
-            score += 1
-
+    # Adjust similarity scores based on preferences
+    for idx, row in data.iterrows():
         if indian and row['Food_Type'].lower() == 'indian':
-            score *= 1.2
+            cosine_sim[idx] *= 1.2
         if chinese and row['Food_Type'].lower() == 'chinese':
-            score *= 1.2
+            cosine_sim[idx] *= 1.2
         if italian and row['Food_Type'].lower() == 'italian':
-            score *= 1.2
+            cosine_sim[idx] *= 1.2
         if japanese and row['Food_Type'].lower() == 'japanese':
-            score *= 1.2
+            cosine_sim[idx] *= 1.2
         if mexican and row['Food_Type'].lower() == 'mexican':
-            score *= 1.2
+            cosine_sim[idx] *= 1.2
         if vegetarian and row['Veg_Non'].lower() == 'vegetarian':
-            score *= 1.2
+            cosine_sim[idx] *= 1.2
         if vegan and row['Veg_Non'].lower() == 'veg':
-            score *= 1.2
+            cosine_sim[idx] *= 1.2
         if gluten_free and row['Food_Type'].lower() == 'healthy food':
-            score *= 1.2
+            cosine_sim[idx] *= 1.2
 
-        scores[index] = score
-    
-    # Sort the food items based on the calculated scores
-    sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-    
-    # Get the top 10 food items within the calorie limit
+    # Get indices of sorted scores
+    sorted_indices = sorted(range(len(cosine_sim)), key=lambda i: cosine_sim[i], reverse=True)
+
+    # Get top 10 food items within the calorie limit
     recommended_foods = []
-    for index, score in sorted_scores:
-        if data['Calories'].iloc[index] <= max_calories:
-            recommended_foods.append(f"{data['Name'].iloc[index]} - {data['Calories'].iloc[index]} cals\n")
+    for idx in sorted_indices:
+        if data['Calories'].iloc[idx] <= max_calories:
+            recommended_foods.append(f"{data['Name'].iloc[idx]} - {data['Calories'].iloc[idx]} cals\n")
             if len(recommended_foods) == 10:
                 break
 

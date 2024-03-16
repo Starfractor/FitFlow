@@ -1,5 +1,7 @@
 package com.example.fitflow;
 
+import com.example.fitflow.Water_Food_Exercise_Data.FoodEntry;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,9 +11,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
-import com.example.fitflow.Water_Food_Exercise_Data.FoodEntry;
 
 public class AddFoodActivity extends AppCompatActivity {
 
@@ -34,34 +33,18 @@ public class AddFoodActivity extends AppCompatActivity {
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonCancel = findViewById(R.id.buttonCancel);
 
-        String cal_string = "Calories eaten today: " + activeLog.foodLog.totalCals;
+        String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
         display.setText(cal_string);
 
+        // Listener for adding food
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String food = editFood.getText().toString();
-                String time = editTime.getText().toString();
-                String cals = editCals.getText().toString();
-                String display_cals = display.getText().toString();
-
-                if (!food.isEmpty() && !time.isEmpty() && !cals.isEmpty()) {
-                    try {
-                        LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
-                        FoodEntry new_food = new FoodEntry(food, Integer.parseInt(cals), 1, current_time);
-                        activeLog.foodLog.addEntry(new_food);
-                        String cal_string = "Calories eaten today: " + activeLog.foodLog.totalCals;
-                        display.setText(cal_string);
-                        activeLog.foodLog.saveLog(AddFoodActivity.this);
-                    } catch (DateTimeParseException e) {
-                        Toast.makeText(AddFoodActivity.this, "Invalid time format. Please enter time in HH:mm format.", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(AddFoodActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
-                }
+                addFoodEntry(editFood.getText().toString(), editTime.getText().toString(), editCals.getText().toString(), display.getText().toString());
             }
         });
 
+        // Listener for canceling
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,50 +52,45 @@ public class AddFoodActivity extends AppCompatActivity {
             }
         });
 
-        // Get references to the two buttons
-        Button buttonQuickSnack = findViewById(R.id.buttonQuickSnack);
-        Button buttonQuickMeal = findViewById(R.id.buttonQuickMeal);
+        // Configure Quick Snack and Quick Meal buttons
+        configureQuickButton(findViewById(R.id.buttonQuickSnack), "Quick Snack", "150");
+        configureQuickButton(findViewById(R.id.buttonQuickMeal), "Quick Meal", "600");
+    }
 
-        // Handle click event for Quick Snack button
-        buttonQuickSnack.setOnClickListener(new View.OnClickListener() {
+    // Method to configure Quick Snack and Quick Meal buttons
+    private void configureQuickButton(Button button, final String food, final String cals) {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Add Quick Snack
-                String food = "Quick Snack";
-                String cals = "150"; 
                 String time = getCurrentTime();
-                addFoodEntry(food, cals, time);
-            }
-        });
-
-        // Handle click event for Quick Meal button
-        buttonQuickMeal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Add Quick Meal
-                String food = "Quick Meal";
-                String cals = "600"; 
-                String time = getCurrentTime();
-                addFoodEntry(food, cals, time);
+                addFoodEntry(food, time, cals, "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals));
             }
         });
     }
 
     // Method to add a food entry
-    private void addFoodEntry(String food, String cals, String time) {
-        if (!time.isEmpty()) {
-            try {
+    private void addFoodEntry(String food, String time, String cals, String display_cals) {
+        if (!food.isEmpty() && !time.isEmpty() && !cals.isEmpty()) {
+            Toast.makeText(AddFoodActivity.this, "Added Food Item: " + food, Toast.LENGTH_SHORT).show(); // New toast message
+            editFood.setText("");
+            editTime.setText("");
+            editCals.setText("");
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
                 FoodEntry new_food = new FoodEntry(food, Integer.parseInt(cals), 1, current_time);
                 activeLog.foodLog.addEntry(new_food);
-                String cal_string = "Calories eaten today: " + activeLog.foodLog.totalCals;
+                String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
                 display.setText(cal_string);
                 activeLog.foodLog.saveLog(AddFoodActivity.this);
-            } catch (DateTimeParseException e) {
-                Toast.makeText(AddFoodActivity.this, "Invalid time format. Please enter time in HH:mm format.", Toast.LENGTH_SHORT).show();
+                LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+                LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
+                NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
+                if (nextMealTime != null) {
+                    NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
+                }
             }
         } else {
-            Toast.makeText(AddFoodActivity.this, "Please enter a time", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddFoodActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
         }
     }
 

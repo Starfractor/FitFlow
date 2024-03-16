@@ -131,7 +131,6 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
                         display.setText(cal_string);
                         activeLog.waterLog.saveLog(AddWaterIntakeActivity.this);
                         LocalTime nextWaterTime = NotificationService.calculateNextWaterTime(current_time, Integer.parseInt(water), activeLog.waterLog.totalOz);
-                        Toast.makeText(AddWaterIntakeActivity.this, "Next Reminder " + nextWaterTime, Toast.LENGTH_SHORT).show();
                         NotificationService.cancelNotification(AddWaterIntakeActivity.this, "Water Reminder");
                         if (nextWaterTime != null) {
                             NotificationService.scheduleNotification(AddWaterIntakeActivity.this, "Water Reminder", "Don't forget to drink!", nextWaterTime);
