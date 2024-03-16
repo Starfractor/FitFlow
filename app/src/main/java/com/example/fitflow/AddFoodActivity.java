@@ -6,21 +6,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.fitflow.Water_Food_Exercise_Data.FoodEntry;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+import com.example.fitflow.Water_Food_Exercise_Data.FoodEntry;
 
 public class AddFoodActivity extends AppCompatActivity {
 
     private EditText editFood;
     private EditText editTime;
-
     private EditText editCals;
-
     private TextView display;
     private Button buttonAdd;
     private Button buttonCancel;
@@ -37,7 +34,7 @@ public class AddFoodActivity extends AppCompatActivity {
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonCancel = findViewById(R.id.buttonCancel);
 
-        String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
+        String cal_string = "Calories eaten today: " + activeLog.foodLog.totalCals;
         display.setText(cal_string);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
@@ -49,25 +46,15 @@ public class AddFoodActivity extends AppCompatActivity {
                 String display_cals = display.getText().toString();
 
                 if (!food.isEmpty() && !time.isEmpty() && !cals.isEmpty()) {
-                    // Perform your logic here to add food
-                    // For now, let's just display a toast message
-                    Toast.makeText(AddFoodActivity.this, "Added Food Item: " + food, Toast.LENGTH_SHORT).show();
-                    editFood.setText("");
-                    editTime.setText("");
-                    editCals.setText("");
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
+                    try {
+                        LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
                         FoodEntry new_food = new FoodEntry(food, Integer.parseInt(cals), 1, current_time);
                         activeLog.foodLog.addEntry(new_food);
-                        String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
+                        String cal_string = "Calories eaten today: " + activeLog.foodLog.totalCals;
                         display.setText(cal_string);
                         activeLog.foodLog.saveLog(AddFoodActivity.this);
-                        LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
-                        LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
-                        NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
-                        if (nextMealTime != null) {
-                            NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
-                        }
+                    } catch (DateTimeParseException e) {
+                        Toast.makeText(AddFoodActivity.this, "Invalid time format. Please enter time in HH:mm format.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(AddFoodActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
@@ -95,12 +82,6 @@ public class AddFoodActivity extends AppCompatActivity {
                 String cals = "150"; 
                 String time = getCurrentTime();
                 addFoodEntry(food, cals, time);
-                LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
-                LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
-                NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
-                if (nextMealTime != null) {
-                    NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
-                }
             }
         });
 
@@ -113,38 +94,32 @@ public class AddFoodActivity extends AppCompatActivity {
                 String cals = "600"; 
                 String time = getCurrentTime();
                 addFoodEntry(food, cals, time);
-                LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
-                LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
-                NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
-                if (nextMealTime != null) {
-                    NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
-                }
             }
         });
     }
 
     // Method to add a food entry
     private void addFoodEntry(String food, String cals, String time) {
-        // Perform your logic here to add food
-        // For now, let's just display a toast message
-        Toast.makeText(AddFoodActivity.this, "Added Food Item: " + food, Toast.LENGTH_SHORT).show();
-        editFood.setText("");
-        editTime.setText("");
-        editCals.setText("");
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
-            FoodEntry new_food = new FoodEntry(food, Integer.parseInt(cals), 1, current_time);
-            activeLog.foodLog.addEntry(new_food);
-            String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
-            display.setText(cal_string);
-            activeLog.foodLog.saveLog(AddFoodActivity.this);
+        if (!time.isEmpty()) {
+            try {
+                LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+                FoodEntry new_food = new FoodEntry(food, Integer.parseInt(cals), 1, current_time);
+                activeLog.foodLog.addEntry(new_food);
+                String cal_string = "Calories eaten today: " + activeLog.foodLog.totalCals;
+                display.setText(cal_string);
+                activeLog.foodLog.saveLog(AddFoodActivity.this);
+            } catch (DateTimeParseException e) {
+                Toast.makeText(AddFoodActivity.this, "Invalid time format. Please enter time in HH:mm format.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(AddFoodActivity.this, "Please enter a time", Toast.LENGTH_SHORT).show();
         }
     }
 
     // Method to get current time
     private String getCurrentTime() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            return LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm"));
+            return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         }
         return ""; // Return empty string
     }
