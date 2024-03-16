@@ -51,10 +51,7 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
                 String time = editTime.getText().toString();
                 String display_water = display.getText().toString();
 
-                // Check if both fields are not empty
                 if (!water.isEmpty() && !time.isEmpty()) {
-                    // Add your logic here to handle adding water intake
-                    // For now, just displaying a toast message
                     Toast.makeText(AddWaterIntakeActivity.this, "Water: " + water + " oz, Time: " + time, Toast.LENGTH_SHORT).show();
                     editWater.setText("");
                     editTime.setText("");
@@ -68,8 +65,8 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
                         activeLog.waterLog.saveLog(AddWaterIntakeActivity.this);
                         LocalTime waterTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
                         LocalTime nextWaterTime = NotificationService.calculateNextWaterTime(waterTime, Integer.parseInt(water), activeLog.waterLog.totalOz);
+                        NotificationService.cancelNotification(AddWaterIntakeActivity.this, "Water Reminder");
                         if (nextWaterTime != null) {
-                            NotificationService.cancelNotification(AddWaterIntakeActivity.this, "Water Reminder");
                             NotificationService.scheduleNotification(AddWaterIntakeActivity.this, "Water Reminder", "Don't forget to drink!", nextWaterTime);
                         }
                     }
@@ -89,8 +86,6 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
 
                 // Check if both fields are not empty
                 if (!water.isEmpty() && !time.isEmpty()) {
-                    // Add your logic here to handle adding water intake
-                    // For now, just displaying a toast message
                     Toast.makeText(AddWaterIntakeActivity.this, "Water: " + water + " oz, Time: " + time, Toast.LENGTH_SHORT).show();
                     editWater.setText("");
                     editTime.setText("");
@@ -103,8 +98,8 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
                         display.setText(cal_string);
                         activeLog.waterLog.saveLog(AddWaterIntakeActivity.this);
                         LocalTime nextWaterTime = NotificationService.calculateNextWaterTime(current_time, Integer.parseInt(water), activeLog.waterLog.totalOz);
+                        NotificationService.cancelNotification(AddWaterIntakeActivity.this, "Water Reminder");
                         if (nextWaterTime != null) {
-                            NotificationService.cancelNotification(AddWaterIntakeActivity.this, "Water Reminder");
                             NotificationService.scheduleNotification(AddWaterIntakeActivity.this, "Water Reminder", "Don't forget to drink!", nextWaterTime);
                         }
                     }
@@ -124,8 +119,6 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
 
                 // Check if both fields are not empty
                 if (!water.isEmpty() && !time.isEmpty()) {
-                    // Add your logic here to handle adding water intake
-                    // For now, just displaying a toast message
                     Toast.makeText(AddWaterIntakeActivity.this, "Water: " + water + " oz, Time: " + time, Toast.LENGTH_SHORT).show();
                     editWater.setText("");
                     editTime.setText("");
@@ -138,8 +131,9 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
                         display.setText(cal_string);
                         activeLog.waterLog.saveLog(AddWaterIntakeActivity.this);
                         LocalTime nextWaterTime = NotificationService.calculateNextWaterTime(current_time, Integer.parseInt(water), activeLog.waterLog.totalOz);
+                        Toast.makeText(AddWaterIntakeActivity.this, "Next Reminder " + nextWaterTime, Toast.LENGTH_SHORT).show();
+                        NotificationService.cancelNotification(AddWaterIntakeActivity.this, "Water Reminder");
                         if (nextWaterTime != null) {
-                            NotificationService.cancelNotification(AddWaterIntakeActivity.this, "Water Reminder");
                             NotificationService.scheduleNotification(AddWaterIntakeActivity.this, "Water Reminder", "Don't forget to drink!", nextWaterTime);
                         }
                     }
@@ -152,7 +146,7 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Close the activity when "Cancel" button is clicked
+                finish();
             }
         });
     }
@@ -162,6 +156,6 @@ public class AddWaterIntakeActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             return LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm"));
         }
-        return ""; // Return empty string
+        return "";
     }
 }

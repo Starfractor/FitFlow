@@ -64,8 +64,8 @@ public class AddFoodActivity extends AppCompatActivity {
                         activeLog.foodLog.saveLog(AddFoodActivity.this);
                         LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
                         LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
+                        NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
                         if (nextMealTime != null) {
-                            NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
                             NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
                         }
                     }
@@ -97,8 +97,8 @@ public class AddFoodActivity extends AppCompatActivity {
                 addFoodEntry(food, cals, time);
                 LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
                 LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
+                NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
                 if (nextMealTime != null) {
-                    NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
                     NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
                 }
             }
@@ -115,8 +115,8 @@ public class AddFoodActivity extends AppCompatActivity {
                 addFoodEntry(food, cals, time);
                 LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
                 LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
+                NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
                 if (nextMealTime != null) {
-                    NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
                     NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
                 }
             }
