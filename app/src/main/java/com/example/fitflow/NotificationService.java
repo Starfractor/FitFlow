@@ -143,14 +143,14 @@ public class NotificationService {
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, NOTIFICATION_ID);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_TITLE, title);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_MESSAGE, message);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE); // Add FLAG_IMMUTABLE flag
+    
         long triggerTimeMillis = calculateTriggerTimeMillis(notificationTime);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
             alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTimeMillis, pendingIntent);
         }
-    }
+    }    
 
     private static long calculateTriggerTimeMillis(LocalTime notificationTime) {
         LocalDateTime currentDateTime = LocalDateTime.now();

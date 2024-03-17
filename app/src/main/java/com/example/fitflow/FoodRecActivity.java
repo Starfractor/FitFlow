@@ -22,13 +22,13 @@ public class FoodRecActivity extends AppCompatActivity {
     private EditText queryEditText;
     private Button searchButton;
     private TextView resultTextView;
-    private Context context; // Declare a Context variable
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.food_recommendation);
-        context = this; // Initialize the Context variable
+        context = this;
 
         // Start Python with AndroidPlatform
         if (!Python.isStarted()) {

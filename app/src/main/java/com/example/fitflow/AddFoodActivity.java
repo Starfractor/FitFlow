@@ -1,16 +1,14 @@
 package com.example.fitflow;
 
+import com.example.fitflow.Water_Food_Exercise_Data.FoodEntry;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.fitflow.Water_Food_Exercise_Data.FoodEntry;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -18,9 +16,7 @@ public class AddFoodActivity extends AppCompatActivity {
 
     private EditText editFood;
     private EditText editTime;
-
     private EditText editCals;
-
     private TextView display;
     private Button buttonAdd;
     private Button buttonCancel;
@@ -40,41 +36,15 @@ public class AddFoodActivity extends AppCompatActivity {
         String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
         display.setText(cal_string);
 
+        // Listener for adding food
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String food = editFood.getText().toString();
-                String time = editTime.getText().toString();
-                String cals = editCals.getText().toString();
-                String display_cals = display.getText().toString();
-
-                if (!food.isEmpty() && !time.isEmpty() && !cals.isEmpty()) {
-                    // Perform your logic here to add food
-                    // For now, let's just display a toast message
-                    Toast.makeText(AddFoodActivity.this, "Added Food Item: " + food, Toast.LENGTH_SHORT).show();
-                    editFood.setText("");
-                    editTime.setText("");
-                    editCals.setText("");
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
-                        FoodEntry new_food = new FoodEntry(food, Integer.parseInt(cals), 1, current_time);
-                        activeLog.foodLog.addEntry(new_food);
-                        String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
-                        display.setText(cal_string);
-                        activeLog.foodLog.saveLog(AddFoodActivity.this);
-                        LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
-                        LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
-                        if (nextMealTime != null) {
-                            NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
-                            NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
-                        }
-                    }
-                } else {
-                    Toast.makeText(AddFoodActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
-                }
+                addFoodEntry(editFood.getText().toString(), editTime.getText().toString(), editCals.getText().toString(), display.getText().toString());
             }
         });
 
+        // Listener for canceling
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,69 +52,52 @@ public class AddFoodActivity extends AppCompatActivity {
             }
         });
 
-        // Get references to the two buttons
-        Button buttonQuickSnack = findViewById(R.id.buttonQuickSnack);
-        Button buttonQuickMeal = findViewById(R.id.buttonQuickMeal);
+        // Configure Quick Snack and Quick Meal buttons
+        configureQuickButton(findViewById(R.id.buttonQuickSnack), "Quick Snack", "150");
+        configureQuickButton(findViewById(R.id.buttonQuickMeal), "Quick Meal", "600");
+    }
 
-        // Handle click event for Quick Snack button
-        buttonQuickSnack.setOnClickListener(new View.OnClickListener() {
+    // Method to configure Quick Snack and Quick Meal buttons
+    private void configureQuickButton(Button button, final String food, final String cals) {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Add Quick Snack
-                String food = "Quick Snack";
-                String cals = "150"; 
                 String time = getCurrentTime();
-                addFoodEntry(food, cals, time);
-                LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
-                LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
-                if (nextMealTime != null) {
-                    NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
-                    NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
-                }
-            }
-        });
-
-        // Handle click event for Quick Meal button
-        buttonQuickMeal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Add Quick Meal
-                String food = "Quick Meal";
-                String cals = "600"; 
-                String time = getCurrentTime();
-                addFoodEntry(food, cals, time);
-                LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
-                LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
-                if (nextMealTime != null) {
-                    NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
-                    NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
-                }
+                addFoodEntry(food, time, cals, "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals));
             }
         });
     }
 
     // Method to add a food entry
-    private void addFoodEntry(String food, String cals, String time) {
-        // Perform your logic here to add food
-        // For now, let's just display a toast message
-        Toast.makeText(AddFoodActivity.this, "Added Food Item: " + food, Toast.LENGTH_SHORT).show();
-        editFood.setText("");
-        editTime.setText("");
-        editCals.setText("");
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
-            FoodEntry new_food = new FoodEntry(food, Integer.parseInt(cals), 1, current_time);
-            activeLog.foodLog.addEntry(new_food);
-            String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
-            display.setText(cal_string);
-            activeLog.foodLog.saveLog(AddFoodActivity.this);
+    private void addFoodEntry(String food, String time, String cals, String display_cals) {
+        if (!food.isEmpty() && !time.isEmpty() && !cals.isEmpty()) {
+            Toast.makeText(AddFoodActivity.this, "Added Food Item: " + food, Toast.LENGTH_SHORT).show(); // New toast message
+            editFood.setText("");
+            editTime.setText("");
+            editCals.setText("");
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                LocalTime current_time = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+                FoodEntry new_food = new FoodEntry(food, Integer.parseInt(cals), 1, current_time);
+                activeLog.foodLog.addEntry(new_food);
+                String cal_string = "Calories eaten today: " + Integer.toString(activeLog.foodLog.totalCals);
+                display.setText(cal_string);
+                activeLog.foodLog.saveLog(AddFoodActivity.this);
+                LocalTime mealTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+                LocalTime nextMealTime = NotificationService.calculateNextMealTime(mealTime, activeLog.foodLog.totalCals, activeLog.userInfo.recommendedCalories);
+                NotificationService.cancelNotification(AddFoodActivity.this, "Meal Reminder");
+                if (nextMealTime != null) {
+                    NotificationService.scheduleNotification(AddFoodActivity.this, "Meal Reminder", "Don't forget to eat!", nextMealTime);
+                }
+            }
+        } else {
+            Toast.makeText(AddFoodActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
         }
     }
 
     // Method to get current time
     private String getCurrentTime() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            return LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm"));
+            return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         }
         return ""; // Return empty string
     }

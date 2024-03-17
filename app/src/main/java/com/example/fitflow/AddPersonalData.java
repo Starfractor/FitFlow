@@ -68,8 +68,6 @@ public class AddPersonalData extends AppCompatActivity {
                 // Check if all fields are filled
                 Log.e("random", height + "|" + weight + "|" + sex + "|" + age);
                 if (!height.isEmpty() && !weight.isEmpty() && !sex.isEmpty() && !age.isEmpty()) {
-                    // Perform your logic here to add personal data
-                    // For now, let's just display a toast message
                     Toast.makeText(AddPersonalData.this, "Height: " + height + ", Weight: " + weight +
                             ", Sex: " + sex + ", Age: " + age, Toast.LENGTH_SHORT).show();
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
