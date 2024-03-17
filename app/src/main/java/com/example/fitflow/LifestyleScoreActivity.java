@@ -22,9 +22,10 @@ public class LifestyleScoreActivity extends AppCompatActivity {
         int stepsTaken = activeLog.foodLog.steps;
         int waterIntake = activeLog.waterLog.totalOz;
 
-        int caloriesRequested = activeLog.userInfo.recommendedCalories;
+        int caloriesRequested = activeLog.userInfo.recommendedCalories != -105 ? activeLog.userInfo.recommendedCalories : 2000;
         int stepsRequested = activeLog.userInfo.recommendedSteps;
-        int waterRequested = (int) (activeLog.userInfo.recommendedLiters * 33.814);
+        int waterRequested = activeLog.userInfo.recommendedLiters != 0 ? (int) (activeLog.userInfo.recommendedLiters * 33.814) : 64;
+
 
         double caloriesRatio = Math.min((double) caloriesConsumed / caloriesRequested, 1);
         double waterRatio = Math.min((double) waterIntake / waterRequested, 1);
