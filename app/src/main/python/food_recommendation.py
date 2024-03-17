@@ -2,13 +2,31 @@ import pandas as pd
 from os.path import join, dirname
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
+from datetime import datetime
 
-def recommend_food(query, max_calories, indian, chinese, italian, japanese, mexican, vegetarian, vegan, gluten_free):
+def recommend_food(query, max_calories, indian, chinese, italian, japanese, mexican, vegetarian, vegan, healthy_food):
     csv_file_path = join(dirname(__file__), "food_data.csv")
 
     # Setup the CSV file
     data = pd.read_csv(csv_file_path)
     data.fillna('', inplace=True)
+
+    # Get current time
+    current_time = datetime.now().time()
+
+    # Filter meals based on current time
+    if current_time < datetime.strptime('6:00:00', '%H:%M:%S').time() or current_time > datetime.strptime('10:00:00', '%H:%M:%S').time():
+        data = data[data['Meal_Time'] != 'breakfast']
+
+    if current_time < datetime.strptime('11:00:00', '%H:%M:%S').time() or current_time > datetime.strptime('14:00:00', '%H:%M:%S').time():
+        data = data[data['Meal_Time'] != 'lunch']
+
+    if current_time < datetime.strptime('16:00:00', '%H:%M:%S').time() or current_time > datetime.strptime('20:00:00', '%H:%M:%S').time():
+        data = data[data['Meal_Time'] != 'dinner']
+
+    # Filter non-vegetarian options if vegan or vegetarian is true
+    if vegan or vegetarian:
+        data = data[data['Veg_Non'].str.lower().isin(['vegetarian', 'veg'])]
 
     # Create numerical features using TF-IDF
     data['Features'] = data['Name'] + ' ' + data['Food_Type'] + ' ' + data['Describe']
@@ -31,11 +49,7 @@ def recommend_food(query, max_calories, indian, chinese, italian, japanese, mexi
             cosine_sim[idx] *= 1.2
         if mexican and row['Food_Type'].lower() == 'mexican':
             cosine_sim[idx] *= 1.2
-        if vegetarian and row['Veg_Non'].lower() == 'vegetarian':
-            cosine_sim[idx] *= 1.2
-        if vegan and row['Veg_Non'].lower() == 'veg':
-            cosine_sim[idx] *= 1.2
-        if gluten_free and row['Food_Type'].lower() == 'healthy food':
+        if healthy_food and row['Food_Type'].lower() == 'healthy food':
             cosine_sim[idx] *= 1.2
 
     # Get indices of sorted scores
