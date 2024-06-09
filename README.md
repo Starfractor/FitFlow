@@ -5,7 +5,7 @@ Since students have busy schedules, they can forget to incorporate healthy habit
 
 ![image](https://github.com/Starfractor/FitFlow/assets/94737289/f34e5d10-22c1-4722-83aa-2cd007bfdc9b)
 
-FitFlow reminds users to hydrate, eat, and exercise, incorporating user data such as physical activity, steps taken, time, weight, age, and sex, while providing meal recommendations based on caloric goals, user acitivty, and meal preferences.
+FitFlow reminds users to hydrate, eat, and exercise, incorporating user data such as physical activity, steps taken, time, weight, age, and sex, while providing meal recommendations based on caloric goals, user activity, and meal preferences.
 
 # Specifics
 **App Structure:**
